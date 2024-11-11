@@ -1,0 +1,51 @@
+version: "3"
+networks:
+  devops:
+services:
+  prod:
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SECRET_KEY: my-secret-key
+      DATABASE_URL: mysql+pymysql://microblog:my-password@mysql/microblog
+    build:
+      context: .
+      dockerfile: docker/Dockerfile_prod
+    container_name: "microblog"
+    ports:
+      - "8000:5000"
+    networks:
+      devops:
+  db:
+    image: "mysql:8.0"
+    restart: always
+    container_name: "mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: microblog
+      MYSQL_USER: microblog
+      MYSQL_PASSWORD: my-password
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
+      timeout: 5s
+      retries: 10
+    networks:
+      devops:
+
+  test:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Dockerfile_test
+    container_name: "microblog_test"
+    volumes:
+      - ./app:/home/microblog/app
+      - ./tests:/home/microblog/tests
+    ports:
+      - "8001:5001"
+    networks:
+      devops:
