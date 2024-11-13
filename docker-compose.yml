@@ -3,16 +3,14 @@ networks:
   devops:
 services:
   prod:
+    image: deadbacteria8/docker-prod:1.1.0
     restart: always
     depends_on:
       db:
         condition: service_healthy
     environment:
-      SECRET_KEY: my-secret-key
+      SECRET_KEY: ca9c838c110047c0ba1a7750353886b5
       DATABASE_URL: mysql+pymysql://microblog:my-password@mysql/microblog
-    build:
-      context: .
-      dockerfile: docker/Dockerfile_prod
     container_name: "microblog"
     ports:
       - "8000:5000"
@@ -29,18 +27,17 @@ services:
       MYSQL_PASSWORD: my-password
     ports:
       - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
       timeout: 5s
       retries: 10
     networks:
       devops:
-
   test:
     restart: always
-    build:
-      context: .
-      dockerfile: docker/Dockerfile_test
+    image: deadbacteria8/docker-test:1.0.0
     container_name: "microblog_test"
     volumes:
       - ./app:/home/microblog/app
@@ -49,3 +46,5 @@ services:
       - "8001:5001"
     networks:
       devops:
+volumes:
+  db-data:

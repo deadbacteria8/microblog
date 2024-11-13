@@ -11,6 +11,8 @@ RUN <<-EOF
     .venv/bin/pip3 install -r requirements.txt
     chmod +x boot.sh
     chown -R microblog:microblog ./
+    mkdir /var/log/microblog
+    chmod -R 777 /var/log/microblog
 EOF
 
 USER microblog
