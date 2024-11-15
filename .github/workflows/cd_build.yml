@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: TESTING PATH
+        run: |
+          echo "Listing contents of /docker directory:"
+          ls -al ./docke
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       -
