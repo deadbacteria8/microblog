@@ -1,4 +1,4 @@
-name: abc
+name: CD, dockerhub
 
 on: [release]
 
@@ -27,3 +27,5 @@ jobs:
         with:
           push: true
           tags: deadbacteria8/docker-prod:1.2.0
+          context: .
+          file: ./docker/Dockerfile_prod

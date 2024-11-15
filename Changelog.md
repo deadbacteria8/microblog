@@ -23,3 +23,4 @@
 ### Fixed
 
 - Fixed typo in cd_build.yml workflow
+- Fixed filepath to dockerfile
