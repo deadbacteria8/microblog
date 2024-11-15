@@ -24,3 +24,4 @@
 
 - Fixed typo in cd_build.yml workflow
 - Fixed filepath to dockerfile
+- Added checkout so we can build dockerfile

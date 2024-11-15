@@ -14,11 +14,6 @@ jobs:
         name: Checkout code
         uses: actions/checkout@v3
       -
-        name: TESTING PATH num 2
-        run: |
-          echo "Listing contents of the base directory:"
-          ls -al
-      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       -
