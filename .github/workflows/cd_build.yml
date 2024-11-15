@@ -7,7 +7,7 @@ jobs:
     uses: ./.github/workflows/make_test_ci.yml
   deploy-to-dockerhub:
     needs: call-workflow-ci
-    runs-on: ubuntu latest
+    runs-on: ubuntu-latest
     steps:
       -
         name: Set up QEMU

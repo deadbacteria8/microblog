@@ -18,3 +18,8 @@
 
 - Added ci via github actions
 - Added cd via github actions and uploading to dockerhub under deadbacteria8 user
+
+
+### Fixed
+
+- Fixed typo in cd_build.yml workflow
