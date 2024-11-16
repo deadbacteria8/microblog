@@ -7,7 +7,7 @@ Microblog
 
 ![test workflow](https://github.com/github/docs/actions/workflows/make_test_ci.yml/badge.svg)
 
-![test2](https://github.com/deadbacteria8/microblog/actions/workflows/make_test_ci/badge.svg)
+![test2](https://github.com/deadbacteria8/microblog/actions/workflows/make_test_ci.yml/badge.svg)
 
 Course material for a devops course, aimed at a Swedish course in computer science on University level new to devops. The students are to further develop this application and integreate it with new tools.
 
