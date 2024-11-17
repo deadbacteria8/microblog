@@ -3,7 +3,8 @@ networks:
   devops:
 services:
   prod:
-    image: deadbacteria8/docker-prod:1.1.0
+    platform: linux/amd64
+    image: deadbacteria8/docker-prod:1.2.0
     restart: always
     depends_on:
       db:
