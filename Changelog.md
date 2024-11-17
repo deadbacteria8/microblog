@@ -40,3 +40,10 @@
 ### Fixed
 
 - Docker issue with building inside azure vm due to image being arm64 and not amd
+
+
+## [v11.1.3] - 2024-11-17
+
+### Fixed
+
+- Docker validation
