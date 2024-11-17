@@ -29,3 +29,9 @@
 ### Added
 
 - Added Followers to the app, you can now follow other users and receive updates in your feed.
+
+## [v11.1.1] - 2024-11-17
+
+### Fixed
+
+- Fixed minor pylint errors in main/routes and unit/models/test_follow
