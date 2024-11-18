@@ -54,3 +54,10 @@
 ### Fixed
 
 - Docker platform fix for amd64. Now using newer docker image
+
+
+## [v11.1.5] - 2024-11-17
+
+### Fixed
+
+- Using mysql 5.7 in docker instead of 8 due to performance issues
