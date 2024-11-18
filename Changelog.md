@@ -47,3 +47,10 @@
 ### Fixed
 
 - Docker validation
+
+
+## [v11.1.4] - 2024-11-17
+
+### Fixed
+
+- Docker platform fix for amd64. Now using newer docker image
