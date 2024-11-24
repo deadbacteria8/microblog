@@ -40,8 +40,8 @@
     authorized_key:
         user: "{{ server_user }}"
         state: present
-        key: "{{ lookup('file', item) }}"
-    with_items: "{{ pub_ssh_key_location }}"
+        key: "{{ item.key }}"
+    with_items: "{{ pub_ssh_keys }}"
 
 
 -   name: Add user to sudoers
