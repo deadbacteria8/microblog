@@ -3,8 +3,8 @@
 ansible_python_interpreter: "python3"
 
 region: northeurope
-resource_group: <your resource group> # Change me
-domain_name: deadbacteria.tech # Change me
+resource_group: DIDA-OLFI22-DV1673-H24-LP2 # Change me
+domain_name: deadbacteria8.tech # Change me
 
 admin_email: olfi22@student.bth.se
 
@@ -12,12 +12,19 @@ vmtags:
     StudentId: olfi22 # Change me
 
 
-pub_ssh_key_location: '<path to you local ssh public key>' # Change me, your local ssh key!
+pub_ssh_key_location: '~/.ssh/azure.pub' # Change me, your local ssh key!
 pub_ssh_keys:
     - key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQClEAu0cfXsFgOB+CU1wdsEfcCO5spUMoHvNmujOGePldRE5Fwg+KERE8OZ4m5sP1h+ro5n9rNJPTcU+ovnZSL1pMv3s8beQ6XQBHYxl5Udxj5IKQo5rVP2YTA5jjDV/57rwPa2SypD1Hs0Cb3YzHgaEvwK1FZ2c+6hHqlxHet9xlJyA92fNp01anZ0KvJwgs197sUGJ3p1uDiIKtV00d5h05qhHVsVdmsOlZ8W7evhj/xv3eUV3wzP1ZlLRA12dtb1TUv5bXpdA4UeV/bOF9I3RR8+XJW/Y8IRk9B6o12M/IH1QmL2/uHkNtkqakuJyzKeJhumPUYH8LnzbzRqEv6Q/jBk2cUJs6ge39qXhguq2h1YrgtI1b7mudpccEUfgvwlfbd3fBlb1l7woOYa1/HQ2SQq58vqWYj+MPKyyRa3FEh4ci51jDUlKlCTTgTO6hj6YY6aItPqKRpDhMeDhJcDSYUJypUMb69Bdyxkv1SZ9rEV/P0vnxCAvQJLuRyET7a3fGFr9eVUJ+lcFRKjbeaCFaZyllq1g72mNBy9yk9lAD4lcrBnBt8qyhvyVVU6/U7q1L9ts+6qsgmFWLmaLxBI0MjL/9GDT9q/ZREVAXQeDLn7JWPRjhXoRTv6+z+zR8b3VrqqhykP3fWX33l4gSDnuB1w9OUW50oG9062Gqglsw== olfi22@student.bth.se" 
     - key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCzI/k5Bmh/PSzKR6wqByAZkBiWza9n/1+XDMN57PYHagwTExsm9w+yHJvl+eFpzghVrFmnNwxEFKhNIBO7QGsFHghQBmz/sRduqiR4CczZTHDoLH31FADe6iMADEHnluaObqsLySwdKQaDZBeimz16RNMSLPwQ5aMG/GQz8Ji8wXg8xhJoihtWvKZ4lpEQPDBMu6lAHqoIYfVffY8Dgquxyj7bNvomPXN7m/2CxRtAYcqTtrNvx0VBU8+OoTinNmLGBHSmhyNP/1vzgBIeHVQaTxUbSVlaNMdO5Wr05FzHtmr4spXAv4SqAI3aQ7Lq0uAyTEqf0dv7ZBKL9S1S5OLxcPSNg5tCCfMy3ZHyMc5jmW7BwWVrdM6TALZTkEohEfuFD37uUUPRZelRPpGV2mqbo92pdAfx6ciEdN/C00K/My9TblLq1jqpJ4hAc8ozccBNlbqPNTqeugAXbjfzVYuuPnIiXO0QtnRrTetEXU/0f3kf6WFWPkHBNcaa1qBo059+DB8XsZxPc3mFpIZ1LlVsYd/dOBkMVApGJSQd/yh/t/bVRLDdwjyJyzb598AAy+9D8d/RSAiCbTcODLG2mWxj1pPeZKuNLI9rk4OhXmp75I3WZDV0PlbkcurNixnlw1SALhLhJTT1sI738NurKwB7zvbCuGaDb5id9oCbePtKRQ== dapa22@student.bth.se" 
 
+db_vars:
+    MYSQL_ROOT_PASSWORD: "yes"
+    MYSQL_DATABASE: "microblog"
+    MYSQL_USER: "microblog"
+    MYSQL_PASSWORD: "my-password"
+
+
 server_user: "deploy"
-server_user_pass: "<a password>" # change me
+server_user_pass: "test" # change me
 server_user_groups:
     -   sudo

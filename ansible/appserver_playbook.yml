@@ -1,8 +1,8 @@
 -   hosts:
-        -  database
+        -  appserver
     remote_user: "{{ server_user }}"
     become: yes
     become_method: sudo
     roles:
         -   docker_installation
-        -   database_playbook
+        -   appserver_playbook

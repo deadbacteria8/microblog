@@ -1,0 +1,40 @@
+---
+  - name: Update apt-cache and upgrade
+    apt:
+      force_apt_get: yes
+      update_cache: "True"
+      cache_valid_time: 3600
+      upgrade: dist
+
+  - name: install dependencies
+    apt:
+      name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - software-properties-common
+      force_apt_get: yes
+
+  - name: Add Docker GPG key 
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+
+  - name: Add Docker repo
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+      state: present
+
+  - name: Update apt-cache and upgrade
+    apt:
+      force_apt_get: yes
+      update_cache: "True"
+      cache_valid_time: 3600
+      upgrade: dist
+
+
+  - name: Install Docker CE
+    apt:
+      name: docker-ce
+      state: present

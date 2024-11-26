@@ -61,3 +61,11 @@
 ### Fixed
 
 - Using mysql 5.7 in docker instead of 8 due to performance issues
+
+
+## [v11.1.6] - 2024-11-27
+
+### Added
+
+- Added automation deploy with ansible
+- Updated boot.sh and use of docker image in ansible because we are no health_checks possible like docker when in seperate vms.

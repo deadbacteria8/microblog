@@ -1,0 +1,13 @@
+---
+- name: Copy docker compose file
+  copy:
+      mode: "644"
+      src: files/docker-compose.yml
+      dest: /home/deploy/docker-compose.yml
+
+- name: Run docker-compose up with environment variables
+  shell: |
+    docker compose up -d
+  args:
+    chdir: /home/deploy
+  environment: "{{ db_vars }}"

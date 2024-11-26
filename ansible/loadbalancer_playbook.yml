@@ -1,8 +1,7 @@
 -   hosts:
-        -  database
+        -  loadbalancer
     remote_user: "{{ server_user }}"
     become: yes
     become_method: sudo
     roles:
-        -   docker_installation
-        -   database_playbook
+        - loadbalancer_playbook

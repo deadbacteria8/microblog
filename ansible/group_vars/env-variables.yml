@@ -1,0 +1,6 @@
+
+db_vars:
+    - MYSQL_ROOT_PASSWORD: yes
+    - MYSQL_DATABASE: microblog
+    - MYSQL_USER: microblog
+    - MYSQL_PASSWORD: my-password
