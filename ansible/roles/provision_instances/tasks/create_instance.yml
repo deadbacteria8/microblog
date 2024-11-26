@@ -39,6 +39,18 @@
         loop_var: relative_name
     delegate_to: 127.0.0.1
 
+-   name: Ensure "A" records for appserver
+    azure_rm_dnsrecordset:
+        resource_group: "{{ resource_group }}"
+        relative_name: "{{ iname }}"
+        zone_name: "{{ domain_name }}"
+        record_type: A
+        state: present
+        records:
+            - entry: "{{ output_ip_address.state.ip_address }}"
+    when: itype == 'appserver'
+    delegate_to: 127.0.0.1
+
 
 
 -   name: Create VM
@@ -49,7 +61,7 @@
         ssh_password_enabled: false
         ssh_public_keys:
             - path: "/home/{{ root_user }}/.ssh/authorized_keys"
-              key_data: "{{ lookup('file', pub_ssh_key_location) }}"
+              key_data: "{{ pub_ssh_keys[0].key }}"
         vm_size: Standard_B1s
         network_interfaces: "{{ iname }}-NIC"
         managed_disk_type: Standard_LRS

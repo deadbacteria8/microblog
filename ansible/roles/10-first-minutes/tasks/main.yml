@@ -4,12 +4,27 @@
         name: root
         password: "{{ root_password }}"
 
+#Because buster-backports Release does not have a Release file.
+-   name: Comment out buster-backports source repositories
+    lineinfile:
+        path: "/etc/apt/sources.list"
+        regexp: '^deb-src .*buster-backports'
+        line: '# deb-src http://debian-archive.trafficmanager.net/debian buster-backports main'
+        state: present
+    #Because buster-backports Release does not have a Release file.
+-   name: Comment out buster-backports repositories
+    lineinfile:
+        path: "/etc/apt/sources.list"
+        regexp: '^deb .*buster-backports'
+        line: '# deb http://debian-archive.trafficmanager.net/debian buster-backports main'
+        state: present
+
 -   name: Update apt-cache and upgrade
     apt:
         force_apt_get: yes
         update_cache: "True"
         cache_valid_time: 3600
-        upgrade: yes
+        upgrade: dist
 
 -   name: Install packages
     apt:
@@ -40,8 +55,8 @@
     authorized_key:
         user: "{{ server_user }}"
         state: present
-        key: "{{ lookup('file', item) }}"
-    with_items: "{{ pub_ssh_key_location }}"
+        key: "{{ item.key }}"
+    with_items: "{{ pub_ssh_keys }}"
 
 
 -   name: Add user to sudoers
@@ -85,3 +100,4 @@
         force: yes
         remove: yes
     # ignore_errors: yes
+

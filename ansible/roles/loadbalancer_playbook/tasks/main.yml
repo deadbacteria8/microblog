@@ -1,0 +1,53 @@
+---
+
+
+  - name: Update apt-cache and upgrade
+    apt:
+      force_apt_get: yes
+      update_cache: "True"
+      cache_valid_time: 3600
+      upgrade: dist
+
+  - name: Download nginx etc
+    apt:
+      name:
+        - nginx
+        - python3-certbot-nginx
+      state: present
+
+  - name: Stop Nginx
+    service:
+      name: nginx
+      state: stopped
+
+  - name: Remove config
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+
+  - name: copy nginx config
+    copy:
+      src: files/nginx.conf
+      dest: /etc/nginx/nginx.conf
+
+  - name: copy loadbalancer config
+    template:
+      src: files/load-balancer.conf.j2
+      dest: /etc/nginx/sites-available/load-balancer.conf
+
+  - name: create symbolic link
+    file:
+      src: /etc/nginx/sites-available/load-balancer.conf
+      dest: /etc/nginx/sites-enabled/load-balancer.conf
+      state: link
+
+  - name: Cerbot certificate
+    command: certbot certonly --standalone --expand --register-unsafely-without-email --agree-tos --non-interactive -d deadbacteria8.tech
+    args:
+      creates: /etc/letsencrypt/live/{{ domain_name }}
+# certbot --nginx --register-unsafely-without-email --agree-tos --non-interactive -d deadbacteria8.tech
+
+  - name: Restart Nginx
+    service:
+      name: nginx
+      state: restarted

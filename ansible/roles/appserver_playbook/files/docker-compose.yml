@@ -1,0 +1,12 @@
+version: "3"
+services:
+  prod:
+    platform: linux/amd64
+    image: deadbacteria8/docker-prod:1.4.0
+    restart: always
+    environment:
+      - SECRET_KEY
+      - DATABASE_URL
+    container_name: "microblog"
+    ports:
+      - "8000:5000"

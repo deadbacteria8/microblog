@@ -1,0 +1,7 @@
+-   hosts:
+        -  loadbalancer
+    remote_user: "{{ server_user }}"
+    become: yes
+    become_method: sudo
+    roles:
+        - loadbalancer_playbook
