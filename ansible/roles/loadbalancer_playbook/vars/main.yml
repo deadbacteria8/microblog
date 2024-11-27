@@ -1,2 +1,2 @@
 ---
-lb_method: round_robin
+lb_method: least_conn
