@@ -1,7 +1,7 @@
 
 http {
     upstream app-hosts {
-        # using round robin as standard {{ lb_method }};
+        {{ lb_method }};
         {% for server in groups['appserver'] %}
         server {{ server }}:8000;
         {% endfor %}

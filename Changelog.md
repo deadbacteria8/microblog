@@ -69,3 +69,10 @@
 
 - Added automation deploy with ansible
 - Updated boot.sh and use of docker image in ansible because we are no health_checks possible like docker when in seperate vms.
+
+## [v11.1.7] - 2024-11-17
+
+### Fixed
+
+- lb method in nginx upstream
+
