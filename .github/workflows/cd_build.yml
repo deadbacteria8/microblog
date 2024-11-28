@@ -1,6 +1,6 @@
 name: CD, dockerhub
 
-on: [release]
+on: [push]
 
 jobs:
   call-workflow-ci:
@@ -43,10 +43,11 @@ jobs:
           echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
           chmod 700 /home/runner/.ssh/id_rsa
       -
-        name: Set up Ansible (using official Ansible container)
-        uses: docker://ansible/ansible:latest
-        with:
-          args: --version
+        name: Install Ansible
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
       -
         name: Run ansible cd_deploy
         run: |
