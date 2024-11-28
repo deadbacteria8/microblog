@@ -51,6 +51,6 @@ jobs:
       -
         name: Run ansible cd_deploy
         run: |
-          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=~/.ssh/id_rsa
+          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key ~/.ssh/id_rsa
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
