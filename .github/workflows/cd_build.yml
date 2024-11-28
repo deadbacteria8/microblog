@@ -33,7 +33,7 @@ jobs:
           tags: deadbacteria8/docker-prod:0.0.1
           context: .
           file: ./docker/Dockerfile_prod
-      -
+      - 
         name: Setup SSH 
         shell: bash
         run: |
@@ -41,10 +41,7 @@ jobs:
           mkdir -p /home/runner/.ssh/
           touch /home/runner/.ssh/id_rsa
           echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-          chmod 700 /home/runner/.ssh/
-          chmod 600 /home/runner/.ssh/id_rsa
-          echo -e "${{secrets.SSH_PRIVATE_KEY}}"
-
+          chmod 700 /home/runner/.ssh/id_rsa
 
       -
         name: Install Ansible
@@ -55,6 +52,6 @@ jobs:
       -
         name: Run ansible cd_deploy
         run: |
-          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=/home/runner/.ssh/id_rsa
+          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=/home/runner/.ssh/id_rsa -vvvv
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
