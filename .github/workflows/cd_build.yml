@@ -41,7 +41,11 @@ jobs:
           mkdir -p /home/runner/.ssh/
           touch /home/runner/.ssh/id_rsa
           echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-          chmod 700 /home/runner/.ssh/id_rsa
+          chmod 700 /home/runner/.ssh/
+          chmod 600 /home/runner/.ssh/id_rsa
+          echo -e "${{secrets.SSH_PRIVATE_KEY}}"
+
+
       -
         name: Install Ansible
         shell: bash
@@ -51,6 +55,6 @@ jobs:
       -
         name: Run ansible cd_deploy
         run: |
-          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key="tomato"
+          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=~/.ssh/id_rsa
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
