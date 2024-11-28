@@ -30,6 +30,24 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: deadbacteria8/docker-prod:1.2.0
+          tags: deadbacteria8/docker-prod:0.0.1
           context: .
           file: ./docker/Dockerfile_prod
+      -
+        name: Setup SSH 
+        shell: bash
+        run: |
+          eval `ssh-agent -s`
+          mkdir -p /home/runner/.ssh/
+          touch /home/runner/.ssh/id_rsa
+          echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+          chmod 700 /home/runner/.ssh/id_rsa
+      -
+        name: Set up Ansible (using official Ansible container)
+        uses: docker://ansible/ansible:latest
+        with:
+          args: --version
+      -
+        name: Run ansible cd_deploy
+        run: |
+          ansible-playbook -i ./ansible/hosts CD_playbook.yml

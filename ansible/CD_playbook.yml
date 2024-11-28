@@ -1,0 +1,69 @@
+---
+- name: Blue-Green Deployment of Docker App with Docker Compose
+  hosts: appservers
+  remote_user: azureuser
+  become: yes
+  serial: 1  # Ensure that one server is updated at a time?
+  vars:
+    app_env:
+---
+app_env:
+    SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
+    DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
+  tasks:
+    - name: Check if Docker Compose is installed
+      command: docker-compose --version
+      register: docker_compose_installed
+      failed_when: false
+
+    - name: Install Docker Compose if not present
+      when: docker_compose_installed.rc != 0
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Copy docker-compose.yml to the server
+      copy:
+        mode: "644"
+        src: appserver_playbook/files/docker-compose.yml
+        dest: /home/deploy/docker-compose.yml
+      notify:
+        - Restart Docker Compose
+
+    - name: Pull the docker img using docker-compose
+      command: docker-compose pull
+      args:
+        chdir: /home/deploy
+      environment: "{{ app_env }}"
+
+    - name: Stop and remove the old containers
+      command: docker-compose down
+      args:
+        chdir: /home/deploy
+      ignore_errors: yes
+      environment: "{{ app_env }}"
+
+    - name: Start the new containers with Docker Compose
+      command: docker-compose up -d
+      args:
+        chdir: /home/deploy
+      environment: "{{ app_env }}"
+
+    - name: Check if the containers are running
+      command: docker-compose ps
+      args:
+        chdir: /home/deploy
+      register: docker_compose_status
+      retries: 5
+      delay: 10
+      until: "'Up' in docker_compose_status.stdout"
+      environment: "{{ app_env }}"
+
+    - name: Get the Docker image version
+      command: docker inspect --format '{{.Config.Image}}' microblog
+      register: docker_image_version
+      failed_when: false
+
+    - name: Display the Docker image version
+      debug:
+        msg: "The current Docker image version is {{ docker_image_version.stdout }}"
