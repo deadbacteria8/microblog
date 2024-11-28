@@ -43,6 +43,12 @@ jobs:
           echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
           chmod 700 /home/runner/.ssh/id_rsa
 
+      - 
+        name: Test SSH connection
+        run: |
+          ssh -i /home/runner/.ssh/id_rsa -o StrictHostKeyChecking=no deploy@appserver1.deadbacteria8.tech "echo SSH works"
+        
+
       -
         name: Install Ansible
         shell: bash
@@ -52,6 +58,6 @@ jobs:
       -
         name: Run ansible cd_deploy
         run: |
-          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=/home/runner/.ssh/id_rsa -vvvv
+          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=/home/runner/.ssh/id_rsa
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
