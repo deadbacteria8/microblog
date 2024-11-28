@@ -2,7 +2,8 @@
 - name: Blue-Green Deployment of Docker App with Docker Compose
   hosts: appservers
   remote_user: deploy
-  serial: 1  # Ensure that one server is updated at a time?
+  become: true
+  serial: 1  # Ensures that one server is updated at a time?
   vars:
     app_env:
         SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
