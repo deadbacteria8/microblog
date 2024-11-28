@@ -3,7 +3,7 @@
     name: CD_playbook
     hosts:
         -   appservers
-    remote_user: azureuser
+    remote_user: deploy
     become: yes
     tasks:
       - name: testing stuff works
