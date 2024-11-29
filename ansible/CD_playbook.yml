@@ -34,7 +34,7 @@
 
     - name: Pull the latest version of microblog
       docker_image:
-        name: "deadbacteria/docker-prod:0.0.2"
+        name: "deadbacteria8/docker-prod:0.0.2"
         source: pull
 
     - name: Install Docker Compose if not present
