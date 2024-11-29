@@ -14,10 +14,28 @@
       SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
       DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
   tasks:
+
+      - name: Fetch tags from GitHub using uri
+      uri:
+        url: "https://api.github.com/repos/deadbacteria8/microblog/tags"
+        return_content: true
+      register: tags
+
+    - name: Parse the latest tag from the API response
+      set_fact:
+        version: "{{ tags.json[0].name }}"
+      debug:
+        msg: "Version is : {{ tags.json[0].name }}"
+
     - name: Check if Docker Compose is installed
       command: docker-compose --version
       register: docker_compose_installed
       failed_when: false
+
+    - name: Pull the latest version of microblog
+      docker_image:
+        name: "deadbacteria/docker-prod:0.0.2"
+        source: pull
 
     - name: Install Docker Compose if not present
       when: docker_compose_installed.rc != 0
