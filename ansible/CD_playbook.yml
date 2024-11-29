@@ -12,7 +12,7 @@
       MYSQL_PASSWORD: "my-password"
     app_env:
       SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-      DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
+      DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] | 13.74.186.90 }}/{{ db_vars.MYSQL_DATABASE }}"
   tasks:
     - name: Check if Docker Compose is installed
       command: docker-compose --version
