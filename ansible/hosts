@@ -4,3 +4,6 @@ localhost ansible_connection=local
 [appservers]
 appserver1.deadbacteria8.tech
 appserver2.deadbacteria8.tech
+
+[database]
+database.deadbacteria8.tech

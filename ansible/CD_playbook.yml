@@ -68,8 +68,8 @@
       until: "'Up' in docker_compose_status.stdout"
       environment: "{{ app_env }}"
 
-    - name: Get the Docker image version
-      command: docker inspect --format '{{.Config.Image}}' microblog
+    - name: Get the Docker image version used by the container
+      command: "docker inspect --format '{{.Config.Image}}' microblog"
       register: docker_image_version
       failed_when: false
 
