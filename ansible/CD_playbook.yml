@@ -25,6 +25,27 @@
         name: docker-compose
         state: present
 
+    - name: Clone the repository to get the latest docker-compose.yml file
+    git:
+      repo: 'https://github.com/deadbacteria8/microblog.git'
+      dest: /home/deploy/microblog
+      version: ansible_cd
+      force: yes
+
+    - name: Copy docker-compose.yml from repo to the deployment directory
+      copy:
+        src: /home/deploy/microblog/ansible/roles/appserver_playbook/files/docker-compose.yml
+        dest: /home/deploy/docker-compose.yml
+        mode: '0644'
+
+
+    - name: Run docker-compose up with environment variables
+      shell: |
+        docker compose pull
+      args:
+        chdir: /home/deploy
+      environment: "{{ app_env }}"
+
     - name: Pull the docker img using docker-compose
       command: docker-compose pull
       args:
