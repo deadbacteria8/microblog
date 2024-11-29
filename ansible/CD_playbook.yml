@@ -20,14 +20,6 @@
         name: docker-compose
         state: present
 
-    - name: Copy docker-compose.yml to the server
-      copy:
-        mode: "644"
-        src: appserver_playbook/files/docker-compose.yml
-        dest: /home/deploy/docker-compose.yml
-      notify:
-        - Restart Docker Compose
-
     - name: Pull the docker img using docker-compose
       command: docker-compose pull
       args:
