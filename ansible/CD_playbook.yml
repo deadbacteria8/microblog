@@ -15,7 +15,7 @@
       DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
   tasks:
 
-      - name: Fetch tags from GitHub using uri
+    - name: Fetch tags from GitHub using uri
       uri:
         url: "https://api.github.com/repos/deadbacteria8/microblog/tags"
         return_content: true
