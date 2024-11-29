@@ -34,6 +34,7 @@
 
     - name: Copy docker-compose.yml from repo to the deployment directory
       copy:
+        remote_src: true
         src: /home/deploy/microblog/ansible/roles/appserver_playbook/files/docker-compose.yml
         dest: /home/deploy/docker-compose.yml
         mode: '0644'
