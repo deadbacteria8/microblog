@@ -26,11 +26,11 @@
         state: present
 
     - name: Clone the repository to get the latest docker-compose.yml file
-    git:
-      repo: 'https://github.com/deadbacteria8/microblog.git'
-      dest: /home/deploy/microblog
-      version: ansible_cd
-      force: yes
+      git:
+        repo: 'https://github.com/deadbacteria8/microblog.git'
+        dest: /home/deploy/microblog
+        version: ansible_cd
+        force: yes
 
     - name: Copy docker-compose.yml from repo to the deployment directory
       copy:
