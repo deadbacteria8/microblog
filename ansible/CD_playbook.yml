@@ -5,9 +5,14 @@
   become: true
   serial: 1  # Ensures that one server is updated at a time?
   vars:
+    db_vars:
+      MYSQL_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "microblog"
+      MYSQL_USER: "microblog"
+      MYSQL_PASSWORD: "my-password"
     app_env:
-        SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-        DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
+      SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
+      DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
   tasks:
     - name: Check if Docker Compose is installed
       command: docker-compose --version
