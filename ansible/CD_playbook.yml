@@ -39,27 +39,27 @@
         dest: /home/deploy/docker-compose.yml
         mode: '0644'
 
-    - name: Pull the docker img using docker-compose
-      command: docker-compose pull --no-credentials
-      args:
-        chdir: /home/deploy
-      environment: "{{ app_env }}"
+    # - name: Pull the docker img using docker-compose seems like it will update to reflect the image in docker-compose.yml
+    #   command: docker-compose pull
+    #   args:
+    #     chdir: /home/deploy
+    #   environment: "{{ app_env }}"
 
     - name: Stop and remove the old containers
-      command: docker-compose down
+      command: docker compose down
       args:
         chdir: /home/deploy
       ignore_errors: yes
       environment: "{{ app_env }}"
 
     - name: Start the new containers with Docker Compose
-      command: docker-compose up -d
+      command: docker compose up -d
       args:
         chdir: /home/deploy
       environment: "{{ app_env }}"
 
     - name: Check if the containers are running
-      command: docker-compose ps
+      command: docker compose ps
       args:
         chdir: /home/deploy
       register: docker_compose_status

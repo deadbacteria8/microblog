@@ -5,8 +5,8 @@ services:
     image: deadbacteria8/docker-prod:0.0.1
     restart: always
     environment:
-      - SECRET_KEY
-      - DATABASE_URL
+      SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
+      DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
     container_name: "microblog"
     ports:
       - "8000:5000"
