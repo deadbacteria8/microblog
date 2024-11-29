@@ -39,16 +39,8 @@
         dest: /home/deploy/docker-compose.yml
         mode: '0644'
 
-
-    - name: Run docker-compose up with environment variables
-      shell: |
-        docker compose pull
-      args:
-        chdir: /home/deploy
-      environment: "{{ app_env }}"
-
     - name: Pull the docker img using docker-compose
-      command: docker-compose pull
+      command: docker-compose pull --no-credentials
       args:
         chdir: /home/deploy
       environment: "{{ app_env }}"
