@@ -73,13 +73,13 @@
         port: 8000
         delay: 15
 
-    - name: Check new stuff
-      uri:
-        url: "http://deadbacteria8.tech/version"
-        return_content: yes
-        status_code: 200
-      register: result
+    # - name: Check new stuff
+    #   uri:
+    #     url: "http://deadbacteria8.tech/version"
+    #     return_content: yes
+    #     status_code: 200
+    #   register: result
 
-    - name: Show the version from the prev step
-      debug:
-        msg: "The version is {{ result.content }}"
+    # - name: Show the version from the prev step
+    #   debug:
+    #     msg: "The version is {{ result.content }}"
