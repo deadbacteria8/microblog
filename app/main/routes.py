@@ -8,6 +8,7 @@ from app import db
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
 from app.main import bp
+import os
 
 
 
@@ -43,6 +44,16 @@ def index():
     return render_template("index.html", title='Home Page', form=form,
                            posts=posts)
 
+@bp.route('/version')
+def version():
+    """
+    Route for version
+    """
+    dc_version = os.environ.get("VERSION")
+    if not dc_version:
+        dc_version = "The princess is in another castle"
+        
+    return render_template('version.html', title='version', version=dc_version)
 
 @bp.route('/explore')
 @login_required

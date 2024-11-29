@@ -68,11 +68,18 @@
       until: "'Up' in docker_compose_status.stdout"
       environment: "{{ app_env }}"
 
-    - name: Get the Docker image version used by the container
-      command: "docker inspect --format '{{.Config.Image}}' microblog"
-      register: docker_image_version
-      failed_when: false
+    - name: Wait for stuff
+      wait_for:
+        port: 8000
+        delay: 15
 
-    - name: Display the Docker image version
+    - name: Check new stuff
+      uri:
+        url: "http://deadbacteria8.tech/version"
+        return_content: yes
+        status_code: 200
+      register: result
+
+    - name: Show the version from the prev step
       debug:
-        msg: "The current Docker image version is {{ docker_image_version.stdout }}"
+        msg: "The version is {{ result.content }}"
