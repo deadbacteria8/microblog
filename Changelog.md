@@ -70,9 +70,15 @@
 - Added automation deploy with ansible
 - Updated boot.sh and use of docker image in ansible because we are no health_checks possible like docker when in seperate vms.
 
-## [v11.1.7] - 2024-11-17
+## [v11.1.7] - 2024-11-27
 
 ### Fixed
 
 - lb method in nginx upstream
+
+## [v11.1.8] - 2024-12-01
+
+### Fixed
+
+- Use of docker-compose jinja file in vm.
 

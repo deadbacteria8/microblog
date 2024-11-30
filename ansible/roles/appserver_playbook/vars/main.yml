@@ -1,4 +1,5 @@
 ---
-app_env:
-    SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-    DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:my-password@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
+
+SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
+DATABASE_URL: "mysql+pymysql://{{ db_vars.MYSQL_USER }}:{{ db_vars.MYSQL_PASSWORD }}@{{ groups.database[0] }}/{{ db_vars.MYSQL_DATABASE }}"
+
