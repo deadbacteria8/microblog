@@ -30,6 +30,33 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: deadbacteria8/docker-prod:1.2.0
+          tags: deadbacteria8/docker-prod:0.0.2
           context: .
           file: ./docker/Dockerfile_prod
+      - 
+        name: Setup SSH 
+        shell: bash
+        run: |
+          eval `ssh-agent -s`
+          mkdir -p /home/runner/.ssh/
+          touch /home/runner/.ssh/id_rsa
+          echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+          chmod 700 /home/runner/.ssh/id_rsa
+
+      - 
+        name: Test SSH connection
+        run: |
+          ssh -i /home/runner/.ssh/id_rsa -o StrictHostKeyChecking=no deploy@appserver1.deadbacteria8.tech "echo SSH works"
+
+      -
+        name: Install Ansible
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+      -
+        name: Run ansible cd_deploy
+        run: |
+          ansible-playbook -i ./ansible/hosts ./ansible/CD_playbook.yml --private-key=/home/runner/.ssh/id_rsa
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"

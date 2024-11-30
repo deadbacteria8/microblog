@@ -1,6 +1,7 @@
 """
 Contains routes for main purpose of app
 """
+import os
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
@@ -43,6 +44,16 @@ def index():
     return render_template("index.html", title='Home Page', form=form,
                            posts=posts)
 
+@bp.route('/version')
+def version():
+    """
+    Route for version
+    """
+    dc_version = os.environ.get("VERSION")
+    if not dc_version:
+        dc_version = "The princess is in another castle"
+        
+    return render_template('version.html', title='version', version=dc_version)
 
 @bp.route('/explore')
 @login_required
