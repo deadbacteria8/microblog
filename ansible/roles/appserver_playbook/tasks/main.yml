@@ -1,8 +1,8 @@
 ---
 - name: Copy docker compose file
-  copy:
+  template:
       mode: "644"
-      src: files/docker-compose.yml
+      src: files/docker-compose.yml.j2
       dest: /home/deploy/docker-compose.yml
 
 - name: Run docker-compose up with environment variables
@@ -10,4 +10,3 @@
     docker compose up -d
   args:
     chdir: /home/deploy
-  environment: "{{ app_env }}"
