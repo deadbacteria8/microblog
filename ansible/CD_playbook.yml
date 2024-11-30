@@ -63,6 +63,8 @@
     #     chdir: /home/deploy
     #   environment: "{{ app_env }}"
 
+    #Skulle i efterhand använt inbyggda docker mer blev jävla massa strul med denna typ bash appraochen
+
     - name: Stop and remove the old containers
       command: docker compose down
       args:
@@ -96,6 +98,7 @@
         url: "http://deadbacteria8.tech/version"
         return_content: yes
         status_code: 200
+        validate_certs: no #should we have?
       register: result
 
     - name: Show the version from the prev step
