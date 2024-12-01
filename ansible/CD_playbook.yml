@@ -63,17 +63,18 @@
 
     #Skulle i efterhand använt inbyggda docker mer blev jävla massa strul med denna typ bash appraochen
 
-    # - name: Stop and remove the old containers
-    #   command: docker compose down
-    #   args:
-    #     chdir: /home/deploy
-    #   ignore_errors: yes
-    #   environment: "{{ app_env }}"
+    - name: Stop and remove the old containers
+      command: docker compose down
+      args:
+        chdir: /home/deploy
+      ignore_errors: yes
+      environment: "{{ app_env }}"
 
     - name: Remove old container
       docker_container:
         name: microblog
         state: absent
+
     # Do it like this and i can just not copy the entire repo and dockercompose file thank fuck
     - name: Restart container with new image
       docker_container:
