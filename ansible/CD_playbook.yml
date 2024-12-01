@@ -22,10 +22,8 @@
       register: tags
 
     - name: Show taggggggg
-      # set_fact:
-      #   version: "{{ tags.json[0].name }}"
-      debug:
-        msg: "Version is : {{ tags.json[0].name }}"
+      set_fact:
+        version: "{{ tags.json[0].name }}"
 
     - name: Check if Docker Compose is installed
       command: docker-compose --version
@@ -34,28 +32,28 @@
 
     - name: Pull the latest version of microblog
       docker_image:
-        name: "deadbacteria8/docker-prod:0.0.2"
+        name: "deadbacteria8/docker-prod:{{ version }}"
         source: pull
 
-    - name: Install Docker Compose if not present
-      when: docker_compose_installed.rc != 0
-      apt:
-        name: docker-compose
-        state: present
+    # - name: Install Docker Compose if not present
+    #   when: docker_compose_installed.rc != 0
+    #   apt:
+    #     name: docker-compose
+    #     state: present
 
-    - name: Clone the repository to get the latest docker-compose.yml file
-      git:
-        repo: 'https://github.com/deadbacteria8/microblog.git'
-        dest: /home/deploy/microblog
-        version: ansible_cd
-        force: yes
+    # - name: Clone the repository to get the latest docker-compose.yml file
+    #   git:
+    #     repo: 'https://github.com/deadbacteria8/microblog.git'
+    #     dest: /home/deploy/microblog
+    #     version: ansible_cd
+    #     force: yes
 
-    - name: Copy docker-compose.yml from repo to the deployment directory
-      copy:
-        remote_src: true
-        src: /home/deploy/microblog/ansible/roles/appserver_playbook/files/docker-compose.yml
-        dest: /home/deploy/docker-compose.yml
-        mode: '0644'
+    # - name: Copy docker-compose.yml from repo to the deployment directory
+    #   copy:
+    #     remote_src: true
+    #     src: /home/deploy/microblog/ansible/roles/appserver_playbook/files/docker-compose.yml
+    #     dest: /home/deploy/docker-compose.yml
+    #     mode: '0644'
 
     # - name: Pull the docker img using docker-compose seems like it will update to reflect the image in docker-compose.yml
     #   command: docker-compose pull
@@ -65,28 +63,46 @@
 
     #Skulle i efterhand använt inbyggda docker mer blev jävla massa strul med denna typ bash appraochen
 
-    - name: Stop and remove the old containers
-      command: docker compose down
-      args:
-        chdir: /home/deploy
-      ignore_errors: yes
-      environment: "{{ app_env }}"
+    # - name: Stop and remove the old containers
+    #   command: docker compose down
+    #   args:
+    #     chdir: /home/deploy
+    #   ignore_errors: yes
+    #   environment: "{{ app_env }}"
 
-    - name: Start the new containers with Docker Compose
-      command: docker compose up -d
-      args:
-        chdir: /home/deploy
-      environment: "{{ app_env }}"
+    - name: Remove old container
+      docker_container:
+        name: microblog
+        state: absent
+    # Do it like this and i can just not copy the entire repo and dockercompose file thank fuck
+    - name: Restart container with new image
+      docker_container:
+        name: microblog
+        image: "deadbacteria8/docker-prod:{{ version }}"
+        env:
+          SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
+          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
+          VERSION: "{{ version }}"
+        ports: 8000:5000
+        published_ports: 8000:5000
+        restart_policy: always
+        state: started
 
-    - name: Check if the containers are running
-      command: docker compose ps
-      args:
-        chdir: /home/deploy
-      register: docker_compose_status
-      retries: 5
-      delay: 10
-      until: "'Up' in docker_compose_status.stdout"
-      environment: "{{ app_env }}"
+    # - name: Start the new containers with Docker Compose
+    #   command: docker compose up -d
+    #   args:
+    #     chdir: /home/deploy
+    #   environment: "{{ app_env }}"
+
+    # - name: Check if the containers are running
+    #   command: docker compose ps
+    #   args:
+    #     chdir: /home/deploy
+    #   register: docker_compose_status
+    #   retries: 5
+    #   delay: 10
+    #   until: "'Up' in docker_compose_status.stdout"
+    #   environment: "{{ app_env }}"
 
     - name: Wait for stuff
       wait_for:
