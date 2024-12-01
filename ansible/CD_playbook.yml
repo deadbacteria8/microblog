@@ -1,5 +1,5 @@
 ---
-- name: Blue-Green Deployment of Docker App with Docker Compose
+- name: Rolling CD of Docker App with Docker Compose
   hosts: appservers
   remote_user: deploy
   become: true
