@@ -25,14 +25,22 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: deadbacteria8/docker-prod
       -
         name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: deadbacteria8/docker-prod:0.0.2
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           context: .
           file: ./docker/Dockerfile_prod
+      
       - 
         name: Setup SSH 
         shell: bash
