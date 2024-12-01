@@ -1,6 +1,6 @@
 name: CD, dockerhub
 
-on: [push, release]
+on: [release]
 
 jobs:
   call-workflow-ci:
