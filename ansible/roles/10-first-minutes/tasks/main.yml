@@ -81,6 +81,21 @@
           line: "PermitRootLogin no"
     notify: restart ssh
 
+-   name: Remove some KexAlgorithms
+    lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "KexAlgorithms -diffie-hellman-group16-sha512,-diffie-hellman-group18-sha512,-diffie-hellman-group14-sha256,-diffie-hellman-group14-sha1,-kex-strict-s-v00@openssh.com"
+        state: present
+    notify: restart ssh
+
+-   name: Remove some Mac algorithms 
+    lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "MACs -umac-64-etm@openssh.com,-hmac-sha1-etm@openssh.com,-umac-64@openssh.com,-hmac-sha1"
+        state: present
+    notify: restart ssh
+
+
 -   name: flush handlers to restart SSH
     meta: flush_handlers # we cant do it later because after this we cant ssh as root
 
@@ -100,4 +115,6 @@
         force: yes
         remove: yes
     # ignore_errors: yes
+
+
 

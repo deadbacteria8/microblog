@@ -12,7 +12,7 @@
       MYSQL_PASSWORD: "my-password"
     app_env:
       SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-      DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
+      DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.189.83/microblog"
   tasks:
 
     - name: Fetch tags from GitHub using uri
@@ -82,7 +82,7 @@
         image: "deadbacteria8/docker-prod:{{ version }}"
         env:
           SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
+          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.189.83/microblog"
           VERSION: "{{ version }}"
         ports: 8000:5000
         published_ports: 8000:5000
