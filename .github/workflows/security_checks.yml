@@ -1,0 +1,42 @@
+name: Setup Dockle and Trivy
+
+on: [workflow_call]
+
+jobs:
+  security-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Install Python and Pip
+        run: |
+          sudo apt-get install -y python3 python3-pip
+      - name: Install Bandit
+        run: |
+          pip3 install bandit
+      
+      - name: Run bandit on app
+        run: |
+          make bandit
+      
+      - name: Install Dockle
+        run: |
+          curl -L -o dockle.deb https://github.com/goodwithtech/dockle/releases/download/v$0.4.14/dockle_0.4.14_Linux-64bit.deb
+          sudo dpkg -i dockle.deb
+          rm dockle.deb
+          dockle --version
+      - name: Run dockle on image
+        env:
+          DOCKER_CONTENT_TRUST: 1
+        run: |
+          make dockle
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+          sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+          rm trivy_0.18.3_Linux-64bit.deb
+          trivy --version
+      - name: Run trivy on image
+        run: |
+          make trivy
