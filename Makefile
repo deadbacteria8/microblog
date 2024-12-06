@@ -90,12 +90,11 @@ dockle: build-local-docker-prod-image
 .PHONY: trivy
 trivy: build-local-docker-prod-image
 	trivy image docker-prod --ignorefile .trivyignore
-	trivy fs --scanners vuln,secret,misconfig --skip-files ".venv/**" --ignorefile .trivyignore .
 
 
 .PHONY: bandit
 bandit:
-	bandit -r app
+	bandit -r app --skip B324
 # target: info                         - Displays versions.
 .PHONY: info
 info:

@@ -5,8 +5,11 @@ on:
     types: [published]
 
 jobs:
+  call-security-checks:
+    uses: ./.github/workflows/security_checks.yml
   call-workflow-ci:
     uses: ./.github/workflows/make_test_ci.yml
+    needs: call-security-checks
   deploy-to-dockerhub:
     needs: call-workflow-ci
     runs-on: ubuntu-latest
