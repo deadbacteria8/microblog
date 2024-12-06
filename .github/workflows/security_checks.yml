@@ -20,6 +20,16 @@ jobs:
         run: |
           make bandit
       
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+          sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+          rm trivy_0.18.3_Linux-64bit.deb
+          trivy --version
+      - name: Run trivy on image
+        run: |
+          make trivy
+
       - name: Install Dockle
         run: |
           curl -L -o dockle.deb https://github.com/goodwithtech/dockle/releases/download/v0.4.14/dockle_0.4.14_Linux-64bit.deb
@@ -31,12 +41,3 @@ jobs:
           DOCKER_CONTENT_TRUST: 1
         run: |
           make dockle
-      - name: Install Trivy
-        run: |
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
-          sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
-          rm trivy_0.18.3_Linux-64bit.deb
-          trivy --version
-      - name: Run trivy on image
-        run: |
-          make trivy
