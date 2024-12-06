@@ -1,6 +1,6 @@
 name: Setup Dockle and Trivy
 
-on: [workflow_call]
+on: [push, pull_request, workflow_call]
 
 jobs:
   security-checks:
