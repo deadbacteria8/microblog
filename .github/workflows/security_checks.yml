@@ -24,7 +24,7 @@ jobs:
         run: |
           wget https://github.com/aquasecurity/trivy/releases/download/v0.58.0/trivy_0.58.0_Linux-64bit.tar.gz
           tar zxvf trivy_0.58.0_Linux-64bit.tar.gz
-          rm trivy_0.58.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
       - name: Run trivy on image
         run: |
           make trivy
