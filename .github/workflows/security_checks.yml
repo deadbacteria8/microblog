@@ -26,9 +26,10 @@ jobs:
           sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
           rm trivy_0.18.3_Linux-64bit.deb
           trivy --version
+
       - name: Run trivy on image
         run: |
-          make trivy
+          sudo make trivy
 
       - name: Install Dockle
         run: |
