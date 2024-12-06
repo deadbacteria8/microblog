@@ -88,8 +88,8 @@ dockle: build-local-docker-prod-image
 	dockle docker-prod
 
 .PHONY: trivy
-trivy:
-	trivy image deadbacteria8/docker-prod:0.0.2 --scanners vuln,secret,misconfig --ignorefile .trivyignore 
+trivy: build-local-docker-prod-image
+	trivy image docker-prod --scanners vuln,secret,misconfig --ignorefile .trivyignore 
 
 
 .PHONY: bandit
