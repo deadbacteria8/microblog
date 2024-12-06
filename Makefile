@@ -89,7 +89,7 @@ dockle: build-local-docker-prod-image
 
 .PHONY: trivy
 trivy: build-local-docker-prod-image
-	trivy image docker-prod --ignorefile .trivyignore
+	trivy image docker-prod --scanners vuln,secret,misconfig --ignorefile .trivyignore 
 
 
 .PHONY: bandit
