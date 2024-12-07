@@ -55,8 +55,8 @@
         env:
           SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
           DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
-          VERSION: "{{ version }}"
           HONEYBADGER: 'hbp_s4S4BoIAyqht3QpwD8ikDuHBku60Z90a6xY7'
+          VERSION: "{{ version }}"
         ports: 8000:5000
         published_ports: 8000:5000
         restart_policy: always
