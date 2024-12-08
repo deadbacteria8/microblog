@@ -94,7 +94,7 @@ trivy: build-local-docker-prod-image
 
 .PHONY: bandit
 bandit:
-	bandit -r app --skip B324
+	bandit -r app
 # target: info                         - Displays versions.
 .PHONY: info
 info:
