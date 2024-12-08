@@ -79,8 +79,22 @@ add-ssh:
 	eval `ssh-agent -s`
 	ssh-add <path/too/ssh-key>
 
+.PHONY: build-local-docker-prod-image
+build-local-docker-prod-image:
+	docker build -f docker/Dockerfile_prod -t docker-prod .
+
+.PHONY: dockle
+dockle: build-local-docker-prod-image
+	dockle docker-prod
+
+.PHONY: trivy
+trivy: build-local-docker-prod-image
+	trivy image docker-prod --scanners vuln,secret,misconfig --ignorefile .trivyignore 
 
 
+.PHONY: bandit
+bandit:
+	bandit -r app --skip B324
 # target: info                         - Displays versions.
 .PHONY: info
 info:
