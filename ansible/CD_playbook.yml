@@ -35,34 +35,6 @@
         name: "deadbacteria8/docker-prod:{{ version }}"
         source: pull
 
-    # - name: Install Docker Compose if not present
-    #   when: docker_compose_installed.rc != 0
-    #   apt:
-    #     name: docker-compose
-    #     state: present
-
-    # - name: Clone the repository to get the latest docker-compose.yml file
-    #   git:
-    #     repo: 'https://github.com/deadbacteria8/microblog.git'
-    #     dest: /home/deploy/microblog
-    #     version: ansible_cd
-    #     force: yes
-
-    # - name: Copy docker-compose.yml from repo to the deployment directory
-    #   copy:
-    #     remote_src: true
-    #     src: /home/deploy/microblog/ansible/roles/appserver_playbook/files/docker-compose.yml
-    #     dest: /home/deploy/docker-compose.yml
-    #     mode: '0644'
-
-    # - name: Pull the docker img using docker-compose seems like it will update to reflect the image in docker-compose.yml
-    #   command: docker-compose pull
-    #   args:
-    #     chdir: /home/deploy
-    #   environment: "{{ app_env }}"
-
-    #Skulle i efterhand använt inbyggda docker mer blev jävla massa strul med denna typ bash appraochen
-
     - name: Stop and remove the old containers
       command: docker compose down
       args:
@@ -82,28 +54,14 @@
         image: "deadbacteria8/docker-prod:{{ version }}"
         env:
           SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.189.83/microblog"
+          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
+          HONEYBADGER: 'hbp_s4S4BoIAyqht3QpwD8ikDuHBku60Z90a6xY7'
+
           VERSION: "{{ version }}"
         ports: 8000:5000
         published_ports: 8000:5000
         restart_policy: always
         state: started
-
-    # - name: Start the new containers with Docker Compose
-    #   command: docker compose up -d
-    #   args:
-    #     chdir: /home/deploy
-    #   environment: "{{ app_env }}"
-
-    # - name: Check if the containers are running
-    #   command: docker compose ps
-    #   args:
-    #     chdir: /home/deploy
-    #   register: docker_compose_status
-    #   retries: 5
-    #   delay: 10
-    #   until: "'Up' in docker_compose_status.stdout"
-    #   environment: "{{ app_env }}"
 
     - name: Wait for stuff
       wait_for:
@@ -115,7 +73,7 @@
         url: "http://deadbacteria8.tech/version"
         return_content: yes
         status_code: 200
-        validate_certs: no #should we have?
+        validate_certs: no
       register: result
 
     - name: Show the version from the prev step

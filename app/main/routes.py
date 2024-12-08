@@ -11,6 +11,12 @@ from app.models import User, Post
 from app.main import bp
 
 
+@bp.route("/error")
+def trigger_error():
+    """
+    Intentionally throw an error for test with honeybadger
+    """
+    raise ValueError("This is a test error!")
 
 @bp.before_request
 def before_request():

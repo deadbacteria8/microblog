@@ -5,6 +5,8 @@ Factory for application
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from honeybadger.contrib import FlaskHoneybadger
+from honeybadger.contrib.logger import HoneybadgerHandler
 from flask import Flask
 from flask.logging import default_handler
 from flask_sqlalchemy import SQLAlchemy
@@ -23,8 +25,7 @@ login.login_view = 'auth.login'
 login.login_message = 'Please log in to access this page.'
 bootstrap = Bootstrap()
 moment = Moment()
-
-
+#'hbp_s4S4BoIAyqht3QpwD8ikDuHBku60Z90a6xY7'
 
 def create_app(config_class=ProdConfig):
     """
@@ -32,6 +33,10 @@ def create_app(config_class=ProdConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.config['HONEYBADGER_ENVIRONMENT'] = 'production'
+    app.config['HONEYBADGER_API_KEY'] = os.environ.get('HONEYBADGER')
+    app.config['HONEYBADGER_PARAMS_FILTERS'] = 'password, secret, credit-card'
+    FlaskHoneybadger(app, report_exceptions=True)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -58,6 +63,8 @@ def create_app(config_class=ProdConfig):
         )
         default_handler.setFormatter(formatter)
         app.logger.setLevel(logging.INFO)
+        hb_handler = HoneybadgerHandler(api_key=app.config['HONEYBADGER_API_KEY'])
+        app.logger.addHandler(hb_handler)
 
     return app
 
