@@ -91,3 +91,8 @@ Continous security test.
 
 ## Fixed
 Continous security test issues.
+
+## [v11.1.10] - 2024-12-08
+
+## Fixed
+Updated make bandit command and added #no sec to specific line that throws error in code
