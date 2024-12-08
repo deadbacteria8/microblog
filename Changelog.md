@@ -82,7 +82,12 @@
 
 - Use of docker-compose jinja file in vm.
 
-## [v11.1.8] - 2024-12-6
+## [v11.1.8] - 2024-12-06
 
 ## Added
 Continous security test.
+
+## [v11.1.9] - 2024-12-08
+
+## Fixed
+Continous security test issues.
