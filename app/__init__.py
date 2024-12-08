@@ -6,6 +6,7 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from honeybadger.contrib import FlaskHoneybadger
+from honeybadger.contrib.logger import HoneybadgerHandler
 from flask import Flask
 from flask.logging import default_handler
 from flask_sqlalchemy import SQLAlchemy
@@ -62,6 +63,8 @@ def create_app(config_class=ProdConfig):
         )
         default_handler.setFormatter(formatter)
         app.logger.setLevel(logging.INFO)
+        hb_handler = HoneybadgerHandler(api_key=app.config['HONEYBADGER_API_KEY'])
+        app.logger.addHandler(hb_handler)
 
     return app
 
