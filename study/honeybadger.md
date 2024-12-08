@@ -6,7 +6,7 @@ Visit honey badger [here](https://www.honeybadger.io/ "visit honeybadger.io")
 
 ### What is Honeybadger
 
-Honeybadger is a Monitoring and error tracking software, fundamentally it will help you do error tracking away from the server and you'll be notified immidietly should an error occur via their dashboard or mail if configured, it makes tracking the issues easier with an easy to use interface that easily lets you get to the root of the problem. It can also keep track of the uptime of your server and notify you if it ever becomes unresponsive it will also notify you if there is an issue regarding your ssl certificate. There are alot of features that honeybadgers brings however we'll mainly be using error tracking and uptime checks.
+Honeybadger is a Monitoring and error tracking software, fundamentally it will help you do error tracking away from the server and you'll be notified immidietly should an error occur via their dashboard or mail if configured, it makes tracking the issues easier with an easy to use interface that easily lets you get to the root of the problem. It can also keep track of the uptime of your server and notify you if it ever becomes unresponsive it will also notify you if there is an issue regarding your ssl certificate. Honeybadger also comes with some improvements to the logging of your application and their own querying language that makes what would be a tedious task into something much less time consuming together with their improved logs this should make your experience monitoring user behaviour and potential attackers alot easier. There are alot of features that honeybadgers brings however we'll mainly be using error tracking and uptime checks hence this text is mainly based around those features. 
 
 ### Instructions for setup
 
@@ -68,6 +68,8 @@ If you want to setup an uptime check to catch any server downtime this is also q
 Honeybadger fits well into devops because it mainly helps us automate some tasks such as error handling and receiving feedback from endusers it also helps us monitor and log which are important for devops. Since a principe of devops is automation it's feels good to be able to automate what can be automated and getting immediete feedback on errors instead of relying on a manual deepdive into  log files on a remote server having them easily accessible through the honeybadger dashboard page and immidietly noticible via notifications that you can configure to reach you through several options such as mail, slack or jira.
 
 Honeybadger can also be used to track any downtime on the server effectively notifying team members whenever the server goes down as well as measuring things like api calls, slow process and bottlenecks that can help us make our application more efficient.
+
+The tool also improves upon the logging and makes monitoring logs alot easier, using their own querying language to sift through the logs will make the operation more efficient and potentially help you discover unusual behaviour on your site more easily.
 
 I also believe that honeybadger could be a bonus for cooperation between developers and ops as honeybadger can help make sure that both parties can be equally informed of any issues in real time and could help them get on the same page faster.
 
