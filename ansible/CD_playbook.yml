@@ -12,7 +12,7 @@
       MYSQL_PASSWORD: "my-password"
     app_env:
       SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-      DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.189.83/microblog"
+      DATABASE_URL: "mysql+pymysql://microblog:my-password@52.236.122.183/microblog"
   tasks:
 
     - name: Fetch tags from GitHub using uri
@@ -54,7 +54,7 @@
         image: "deadbacteria8/docker-prod:{{ version }}"
         env:
           SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-          DATABASE_URL: "mysql+pymysql://microblog:my-password@13.74.186.90/microblog"
+          DATABASE_URL: "mysql+pymysql://microblog:my-password@52.236.122.183/microblog"
           HONEYBADGER: 'hbp_s4S4BoIAyqht3QpwD8ikDuHBku60Z90a6xY7'
 
           VERSION: "{{ version }}"
@@ -66,7 +66,7 @@
     - name: Wait for stuff
       wait_for:
         port: 8000
-        delay: 15
+        delay: 30
 
     - name: Check new stuff
       uri:
