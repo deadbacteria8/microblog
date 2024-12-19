@@ -5,8 +5,6 @@ Factory for application
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from honeybadger.contrib import FlaskHoneybadger
-from honeybadger.contrib.logger import HoneybadgerHandler
 from flask import Flask
 from flask.logging import default_handler
 from flask_sqlalchemy import SQLAlchemy
@@ -14,8 +12,11 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_bootstrap import Bootstrap
-from app.config import ProdConfig, RequestFormatter
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
+from honeybadger.contrib import FlaskHoneybadger
+from honeybadger.contrib.logger import HoneybadgerHandler
+from app.config import ProdConfig, RequestFormatter
+
 
 
 
