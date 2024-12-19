@@ -96,3 +96,8 @@ Continous security test issues.
 
 ## Fixed
 Updated make bandit command and added #no sec to specific line that throws error in code
+
+## [v11.1.11] - 2024-12-19
+
+## Fixed
+nginx and flask exporting data to prometheus, displayed by grafana

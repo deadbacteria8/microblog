@@ -1,8 +1,8 @@
 -   hosts:
-        -  loadbalancer
+        -  monitoring
     remote_user: "{{ server_user }}"
     become: yes
     become_method: sudo
     roles:
         - docker_installation
-        - loadbalancer_playbook
+        - monitoring_playbook

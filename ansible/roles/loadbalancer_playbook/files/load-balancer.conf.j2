@@ -30,9 +30,11 @@ http {
        ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/cert.pem;
        ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-
        location / {
           proxy_pass http://app-hosts;
        }
+      location /metrics {
+          stub_status on;
+      }
     }
 }

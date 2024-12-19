@@ -15,9 +15,11 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_bootstrap import Bootstrap
 from app.config import ProdConfig, RequestFormatter
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 
 
+metrics = GunicornInternalPrometheusMetrics.for_app_factory()
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
@@ -33,6 +35,7 @@ def create_app(config_class=ProdConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
+    metrics.init_app(app)
     app.config['HONEYBADGER_ENVIRONMENT'] = 'production'
     app.config['HONEYBADGER_API_KEY'] = os.environ.get('HONEYBADGER')
     app.config['HONEYBADGER_PARAMS_FILTERS'] = 'password, secret, credit-card'

@@ -12,7 +12,7 @@
       MYSQL_PASSWORD: "my-password"
     app_env:
       SECRET_KEY: "ca9c838c110047c0ba1a7750353886b5"
-      DATABASE_URL: "mysql+pymysql://microblog:my-password@52.236.122.183/microblog"
+      DATABASE_URL: "mysql+pymysql://microblog:my-password@database.deadbacteria8.tech/microblog"
   tasks:
 
     - name: Fetch tags from GitHub using uri
