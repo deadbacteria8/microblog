@@ -48,7 +48,7 @@
         state: present
         records:
             - entry: "{{ output_ip_address.state.ip_address }}"
-    when: itype == 'appserver'
+    when: itype == 'appserver' or itype == 'database'
     delegate_to: 127.0.0.1
 
 

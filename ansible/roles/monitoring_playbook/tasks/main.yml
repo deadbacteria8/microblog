@@ -1,0 +1,51 @@
+- name: Copy prometheus file
+  template:
+      src: files/prometheus.yml.j2
+      dest: /home/deploy/prometheus.yml
+
+- name: Copy docker file
+  copy:
+      src: files/docker-compose.yml
+      dest: /home/deploy/docker-compose.yml
+
+- name: Copy docker file
+  copy:
+      src: files/docker-compose.yml
+      dest: /home/deploy/docker-compose.yml
+
+- name: Copy dashboard dir
+  copy:
+      src: files/dashboards
+      dest: /home/deploy
+
+- name: Run docker-compose up
+  shell: |
+    docker compose up -d
+  args:
+    chdir: /home/deploy
+
+- name: Add Prometheus as a Grafana datasource
+  community.grafana.grafana_datasource:
+    name: prometheus
+    ds_type: prometheus
+    ds_url: "http://prometheus:9090"
+    grafana_url: "http://0.0.0.0:3000"
+    access: proxy
+    tls_skip_verify: true
+    state: present
+
+- name: Flask dashboard
+  community.grafana.grafana_dashboard:
+    grafana_url: "http://0.0.0.0:3000"
+    state: present
+    commit_message: Updated by ansible
+    overwrite: true
+    path: dashboards/flask-dashboard.json
+
+- name: nginx dashboard
+  community.grafana.grafana_dashboard:
+    grafana_url: "http://0.0.0.0:3000"
+    state: present
+    commit_message: Updated by ansible
+    overwrite: true
+    path: dashboards/nginx-dashboard.json

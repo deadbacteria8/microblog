@@ -18,8 +18,6 @@
     collections:
         - azure.azcollection
 
-
-# Here we utilize that we added each instance to hosts.
 -   hosts: devops
     connection: local # Keep ansible from open ssh connection
     gather_facts: False
@@ -28,11 +26,15 @@
         - azure.azcollection
     roles:
         - provision_instances
+        
 
-- import_playbook: gather_instances.yml
+
+# Here we utilize that we added each instance to hosts.
+# - import_playbook: gather_instances.yml
 
 -   name: create security groups
     hosts: local
     gather_facts: False
     roles: 
+        - gather_instances
         - security_groups

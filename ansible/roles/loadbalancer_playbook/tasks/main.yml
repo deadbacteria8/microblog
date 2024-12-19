@@ -51,3 +51,18 @@
     service:
       name: nginx
       state: restarted
+
+  - name: Start the NGINX Prometheus Exporter container
+    docker_container:
+      name: nginx_prometheus_exporter
+      image: nginx/nginx-prometheus-exporter:0.4.2
+      restart_policy: always
+      published_ports:
+        - "9113:9113"
+      command: >
+        -nginx.scrape-uri=https://{{ domain_name }}/metrics
+        -nginx.retries=10
+        -nginx.ssl-verify=false
+        -web.telemetry-path=/prometheus
+      state: started
+      detach: true
