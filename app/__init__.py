@@ -18,8 +18,6 @@ from honeybadger.contrib.logger import HoneybadgerHandler
 from app.config import ProdConfig, RequestFormatter
 
 
-if os.environ.get('FLASK_ENV', 'development') == "production":
-    metrics = GunicornInternalPrometheusMetrics.for_app_factory()
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
@@ -35,7 +33,9 @@ def create_app(config_class=ProdConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
-    metrics.init_app(app)
+    if os.environ.get('FLASK_ENV', 'development') == "production":
+        metrics = GunicornInternalPrometheusMetrics.for_app_factory()
+        metrics.init_app(app)
     app.config['HONEYBADGER_ENVIRONMENT'] = 'production'
     app.config['HONEYBADGER_API_KEY'] = os.environ.get('HONEYBADGER')
     app.config['HONEYBADGER_PARAMS_FILTERS'] = 'password, secret, credit-card'
