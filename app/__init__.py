@@ -18,9 +18,8 @@ from honeybadger.contrib.logger import HoneybadgerHandler
 from app.config import ProdConfig, RequestFormatter
 
 
-
-
-metrics = GunicornInternalPrometheusMetrics.for_app_factory()
+if os.environ.get('FLASK_ENV', 'development') == "production":
+    metrics = GunicornInternalPrometheusMetrics.for_app_factory()
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
