@@ -13,6 +13,21 @@
       src: files/docker-compose.yml
       dest: /home/deploy/docker-compose.yml
 
+- name: Copy rules file
+  copy:
+      src: files/rules.yml
+      dest: /home/deploy/rules.yml
+
+- name: Copy alertmanager
+  copy:
+      src: files/alertmanager.yml
+      dest: /home/deploy/alertmanager.yml
+
+- name: Copy grafana.ini
+  copy:
+      src: files/deploy/grafana.ini
+      dest: /home/deploy/grafana.ini
+
 - name: Copy dashboard dir
   copy:
       src: files/dashboards

@@ -40,10 +40,10 @@ services:
       - "9003:9093"
     volumes:
       - "./alertmanager.yml:/config/alertmanager.yml"
-    command: --config.file=/config/alertmanager.yml
+    command:
+      - "--config.file=/config/alertmanager.yml"
     networks:
       - monitor
 
 
 
-      
