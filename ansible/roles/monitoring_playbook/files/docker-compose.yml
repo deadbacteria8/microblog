@@ -29,6 +29,7 @@ services:
     restart: unless-stopped
     volumes:
       - grafana-data17:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
     ports:
       - "3000:3000"
     networks:
