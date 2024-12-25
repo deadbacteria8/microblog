@@ -14,7 +14,11 @@ scrape_configs:
     static_configs: 
     - targets: ["{{ groups['loadbalancer'][0] }}:9113"]
 
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ["{{ groups['monitoring'][0] }}:9093"]
 
-
-
+rule_files:
+  - rules.yml
 
