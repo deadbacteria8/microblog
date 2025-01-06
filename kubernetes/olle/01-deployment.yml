@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microblog
+spec:
+  selector:
+    matchLabels:
+      app: microblog
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: microblog
+    spec:
+      containers:
+      - image: deadbacteria8/docker-prod:0.0.6
+        imagePullPolicy: Always
+        name: microblog
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ENV
+          value: "production"
+        - name: FLASK_ENV
+          value: "production"
+        - name: PROMETHEUS_MULTIPROC_DIR
+          value: "/tmp"
+        - name: DATABASE_URL
+          value: "mysql+pymysql://microblog:my-password@mysql/microblog"
+        #envFrom:
+        #- secretRef:
+        #    name: mysql-secrets jag ville använda secret variabler i database_url men fick inte till det 
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
